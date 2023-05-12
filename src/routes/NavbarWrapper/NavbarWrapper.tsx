@@ -1,12 +1,13 @@
 import { Outlet } from 'react-router-dom'
 import { Nav } from '../../components'
+import { AuthProvider } from '../../context'
 
 const NavbarWrapper = () => {
   return (
-    <div>
+    <AuthProvider>
       <Nav />
       <Outlet />
-    </div>
+    </AuthProvider>
   )
 }
 
