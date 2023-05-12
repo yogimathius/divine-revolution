@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 // import jwt from 'jsonwebtoken';
 
 const useAuthHandler = () => {
   const [token, setToken] = useState<string | null>(null);
-
+  const navigate = useNavigate()
   // Function to set the token in localStorage
   const setAuthToken = (token: string) => {
     localStorage.setItem('authToken', token);
@@ -11,10 +12,13 @@ const useAuthHandler = () => {
   };
 
   // Function to remove the token from localStorage
-  const removeAuthToken = () => {
+  const logout = () => {
     localStorage.removeItem('authToken');
     setToken(null);
+    navigate('/login')
   };
+
+  const isAuthenticated = !!token
 
   useEffect(() => {
     // Check if a token exists in localStorage on initial render
@@ -45,7 +49,8 @@ const useAuthHandler = () => {
     token,
     setToken,
     setAuthToken,
-    removeAuthToken
+    logout,
+    isAuthenticated
   }
 }
 
