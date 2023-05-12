@@ -1,4 +1,5 @@
 export {Root} from './Root'
 export {Login} from './Login'
 export {NavbarWrapper} from './NavbarWrapper'
+export {Profile} from './Profile'
 export {default as loader} from './loaders'

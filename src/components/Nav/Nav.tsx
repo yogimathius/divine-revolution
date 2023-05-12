@@ -27,10 +27,10 @@ const Nav = () => {
               Home
             </NavLink>
             <NavLink
-              to="/home"
-              className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/home' ? 'bg-blue-600' : ''}`}
+              to="/profile"
+              className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/profile' ? 'bg-blue-600' : ''}`}
             >
-              About
+              Profile
             </NavLink>
             <NavLink
               to="/contact"
