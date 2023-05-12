@@ -9,8 +9,7 @@ function App() {
   return (
     <div className="bg-gray-100 min-h-screen">
       <div className="flex items-center max-w-4xl w-full mx-4 sm:mx-auto px-6 py-8 bg-white shadow-md rounded-md min-h-screen">
-        <Nav />
-        <Login onLogin={() => console.log('login clicked')} />
+        <Login />
       </div>
     </div>
   )
