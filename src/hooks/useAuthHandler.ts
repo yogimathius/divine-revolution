@@ -18,15 +18,15 @@ const useAuthHandler = () => {
     navigate('/login')
   };
 
-  const isAuthenticated = !!token
-
   useEffect(() => {
     // Check if a token exists in localStorage on initial render
-    const storedToken = localStorage.getItem('authToken');
-    if (storedToken) {
-      setToken(storedToken);
+    if (!token) {
+      const storedToken = localStorage.getItem('authToken');
+      if (storedToken) {
+        setToken(storedToken);
+      }
     }
-  }, [setToken]);
+  }, [setToken, token]);
 
   
   // TODO fix bug in this function about util.inherits not being a function
@@ -50,7 +50,6 @@ const useAuthHandler = () => {
     setToken,
     setAuthToken,
     logout,
-    isAuthenticated
   }
 }
 

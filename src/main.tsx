@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {Home, Login, Root} from './routes'
+import { Login, Root} from './routes'
 import './index.css'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { AppProvider } from '@shopify/polaris';
@@ -10,8 +10,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./error-page.tsx";
-import { Nav } from './components';
 import {loader} from './routes';
+import NavbarWrapper from './routes/NavbarWrapper/NavbarWrapper.tsx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
@@ -21,19 +21,19 @@ const client = new ApolloClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Root />,
+    element: <NavbarWrapper />,
     errorElement: <ErrorPage />,
-    loader: loader,
     children: [
       {
-        path: "/home",
-        element: <Home />
+        path: "/",
+        element: <Root />,
+        loader: loader,
+      },
+      {
+        path: "login",
+        element: <Login />
       },
     ]
-  },
-  {
-    path: "/login",
-    element: <Login />
   }
 ]);
 

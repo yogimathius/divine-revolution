@@ -7,7 +7,7 @@ const loader = async () => {
   if (!storedToken) {
     return redirect("/login");
   }
-  return null;
+  return null
 };
 
 export default loader;
