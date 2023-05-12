@@ -1,5 +1,5 @@
 import useGetUsersQuery from './graphql/hooks/useGetUsersQuery'
-import { Login, Nav } from './components'
+import { Login } from './routes/Login';
 
 
 function App() {

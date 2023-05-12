@@ -10,7 +10,8 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./error-page.tsx";
-import { Login, Nav } from './components/index.ts';
+import { Nav } from './components/index.ts';
+import Login from './routes/Login/Login.tsx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
