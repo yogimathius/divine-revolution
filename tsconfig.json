@@ -28,6 +28,5 @@
       "documents": "src/**/*.graphql"
     }
   ],
-  "files": ["src/@types/graphql.d.ts"],
-
+  "files": ["src/@types/graphql.d.ts"]
 }
