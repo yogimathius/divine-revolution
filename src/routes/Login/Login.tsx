@@ -8,7 +8,7 @@ import { AuthContext } from '../../context';
 const Login= () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { setAuthToken } = useContext(AuthContext);
+  const { setAuthToken, setUser } = useContext(AuthContext);
 
   const navigate = useNavigate();
 
@@ -24,6 +24,7 @@ const Login= () => {
     console.log('success!', data);
     if (data) {
       setAuthToken(data.login.token)
+      setUser(data.login.user)
       setUsername('');
       setPassword('');
       navigate('/')
