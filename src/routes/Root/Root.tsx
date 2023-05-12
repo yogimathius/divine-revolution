@@ -1,9 +1,14 @@
+import { Outlet } from 'react-router-dom'
+import { Nav } from '../../components'
+import { AuthProvider } from '../../context'
+
 const Root = () => {
   return (
-    <div>
-      Protected
-    </div>
-  );
-};
+    <AuthProvider>
+      <Nav />
+      <Outlet />
+    </AuthProvider>
+  )
+}
 
-export default Root;
+export default Root

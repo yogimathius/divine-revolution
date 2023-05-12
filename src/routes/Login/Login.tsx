@@ -32,7 +32,7 @@ const Login= () => {
   };
 
   return (
-  <div className="flex flex-col items-center justify-center space-y-4 bg-blue-100 rounded-lg mx-auto p-24 h-max">
+    <div className="flex flex-col items-center justify-center space-y-4 bg-blue-100 rounded-lg mx-auto p-24 h-max">
       {error ? <p>Oh no! {error.message}</p> : null}
       <h2 className="text-2xl font-semibold mb-2">Login</h2>
       <TextField
