@@ -1,37 +1,33 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { loginMutation } from '../../graphql/mutations/login';
 import { useAuthHandler } from '../../hooks';
+import { useNavigate } from "react-router-dom";
 
 const Login= () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const {setAuthToken} = useAuthHandler()
+  const navigate = useNavigate();
 
-  // isTokenExpired()
-  const [login, {error, data}] = useMutation(loginMutation, {
+  const [login, {error}] = useMutation(loginMutation, {
     variables: {
       username,
       password
     }
   })
 
-  const handleLogin = () => {
-    // Reset form fields
-    console.log(username, password);
-    login()
-  };
-  
-  useEffect(() => {
+  const handleLogin = async () => {
+    const {data} = await login()
+    console.log('success!', data);
     if (data) {
-      console.log(data);
-      
       setAuthToken(data.login.token)
       setUsername('');
       setPassword('');
+      navigate('/')
     }
-  }, [data])
+  };
 
   return (
   <div className="flex flex-col items-center justify-center space-y-4 bg-blue-100 rounded-lg mx-auto p-24 h-max">
