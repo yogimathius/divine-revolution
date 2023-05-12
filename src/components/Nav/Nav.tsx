@@ -1,9 +1,11 @@
-import { Link, NavLink, useLocation } from 'react-router-dom';
-import { useAuthHandler } from '../../hooks';
+import { Link, NavLink } from 'react-router-dom';
+import { useContext } from 'react';
+import { AuthContext } from '../../context';
 
 const Nav = () => {
-  const { token, logout } = useAuthHandler();
-
+  const { isLoggedIn, logout } = useContext(AuthContext);
+  console.log('nav logged in value:', isLoggedIn);
+  
   return (
     <nav className="bg-blue-500 fixed max-w-4xl w-full mx-4 sm:mx-auto z-10 top-0 left-0 right-0">
       <div className="max-w-7xl mx-auto px-4">
@@ -36,7 +38,7 @@ const Nav = () => {
             >
               Contact
             </NavLink>
-            {token ? (
+            {isLoggedIn ? (
               <button onClick={() => logout()} className="text-white hover:bg-blue-600 px-3 py-2 rounded-md">Logout</button>
             ) : (
               <Link to="/login" className="text-white hover:bg-blue-600 px-3 py-2 rounded-md">Login</Link>

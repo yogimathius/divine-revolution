@@ -12,6 +12,7 @@ import {
 import ErrorPage from "./error-page.tsx";
 import {loader} from './routes';
 import NavbarWrapper from './routes/NavbarWrapper/NavbarWrapper.tsx';
+import { AuthProvider } from './context';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',

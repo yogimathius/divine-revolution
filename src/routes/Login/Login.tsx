@@ -1,14 +1,15 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { useMutation } from '@apollo/client';
 import { loginMutation } from '../../graphql/mutations/login';
-import { useAuthHandler } from '../../hooks';
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from '../../context';
 
 const Login= () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const {setAuthToken} = useAuthHandler()
+  const { setAuthToken } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
   const [login, {error}] = useMutation(loginMutation, {
