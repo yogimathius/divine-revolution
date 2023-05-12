@@ -1,8 +1,6 @@
-import React from 'react'
-
 const Nav = () => {
   return (
-    <nav className="bg-blue-500">
+    <nav className="bg-blue-500 fixed max-w-4xl w-full mx-4 sm:mx-auto z-10 top-0 left-0 right-0">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
