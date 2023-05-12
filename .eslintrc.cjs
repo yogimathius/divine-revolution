@@ -11,4 +11,8 @@ module.exports = {
   rules: {
     'react-refresh/only-export-components': 'warn',
   },
+  globals: {
+    __dirname: true,
+    module: true,
+  }
 }
