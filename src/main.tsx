@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
+import {Home, Login} from './routes'
 import './index.css'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { AppProvider } from '@shopify/polaris';
@@ -10,8 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./error-page.tsx";
-import { Nav } from './components/index.ts';
-import Login from './routes/Login/Login.tsx';
+import { Nav } from './components';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
@@ -21,7 +20,7 @@ const client = new ApolloClient({
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />,
+    element: <Home />,
     errorElement: <ErrorPage />,
   },
   {
@@ -34,9 +33,12 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
     <ApolloProvider client={client}>
       <AppProvider i18n={translations}>
-
-          <Nav />
-          <RouterProvider router={router} />
+        <Nav />
+        <div className="bg-gray-100 min-h-screen">
+          <div className="flex items-center max-w-4xl w-full mx-4 sm:mx-auto px-6 py-8 bg-white shadow-md rounded-md min-h-screen">
+            <RouterProvider router={router} />
+          </div>
+        </div>
       </AppProvider>
     </ApolloProvider>
   </React.StrictMode>,
