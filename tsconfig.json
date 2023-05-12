@@ -19,7 +19,7 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "./global.d.ts"],
   "references": [{ "path": "./tsconfig.node.json" }],
   "plugins": [
     {
@@ -28,5 +28,6 @@
       "documents": "src/**/*.graphql"
     }
   ],
-  "files": ["src/@types/graphql.d.ts"]
+  "files": ["src/@types/graphql.d.ts"],
+
 }
