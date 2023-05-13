@@ -13,13 +13,13 @@ const ProfilePage = () => {
     if (userId) {
       getUserData(userId)
     }
-  })
+  }, [getUserData, userId])
 
   useEffect(() => {
     if (data) {
       setUser(data.user)
     }
-  })
+  }, [data, setUser, user])
 
   if (loading && !user) {
     return (
@@ -30,10 +30,10 @@ const ProfilePage = () => {
   }
   
   return (
-    <div className="container mx-auto p-4">
-      <div className="bg-white p-6 shadow-md rounded-lg">
+    <div className='h-screen mt-8 max-w-4xl w-full mx-4 sm:mx-auto '>
+      <div className=" border-b border-gray-300 p-6  ">
         <h2 className="text-2xl font-bold mb-4">Profile</h2>
-        <div className="border-b border-gray-300 pb-4 mb-4">
+        <div className="pb-4 mb-4">
           <p className="text-lg font-semibold">
             <span className="text-blue-600">Username:</span> {user.username}
           </p>
@@ -48,6 +48,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
+
   );
 };
 
