@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { Home, Login, Profile, Root, loader} from './routes'
+import { Home, Login, Profile, Root, authChecker} from './routes'
 import './index.css'
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { AppProvider } from '@shopify/polaris';
@@ -25,12 +25,12 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Home />,
-        loader: loader,
+        loader: authChecker,
       },
       {
         path: "profile",
         element: <Profile />,
-        loader: loader,
+        loader: authChecker,
       },
       {
         path: "login",

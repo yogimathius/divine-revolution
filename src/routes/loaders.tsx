@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-const loader = async () => {
+const authChecker = async () => {
   const storedToken = localStorage.getItem('authToken');
   console.log('token in loader: ', storedToken);
   
@@ -10,4 +10,4 @@ const loader = async () => {
   return null
 };
 
-export default loader;
+export default authChecker;
