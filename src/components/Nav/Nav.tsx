@@ -45,7 +45,10 @@ const Nav = () => {
             {isLoggedIn ? (
               <button onClick={() => logout()} className="text-white hover:bg-blue-600 px-3 py-2 rounded-md">Logout</button>
             ) : (
-              <Link to="/login" className="text-white hover:bg-blue-600 px-3 py-2 rounded-md">Login</Link>
+              <>
+                <Link to="/login" className="text-white hover:bg-blue-600 px-3 py-2 rounded-md">Login</Link>
+                <Link to="/register" className="text-white hover:bg-blue-600 px-3 py-2 rounded-md">Signup</Link>
+              </>
             )}
           </div>
         </div>

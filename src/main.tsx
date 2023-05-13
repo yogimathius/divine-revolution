@@ -10,6 +10,7 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import ErrorPage from "./error-page.tsx";
+import Register from './routes/Register/Register.tsx';
 
 const client = new ApolloClient({
   uri: 'http://localhost:3000/graphql',
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <Login />
+      },
+      {
+        path: "register",
+        element: <Register />
       },
     ]
   }
