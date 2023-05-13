@@ -23,7 +23,7 @@ const Login= () => {
     const {data} = await login()
     console.log('success!', data);
     if (data) {
-      setAuthToken(data.login.token)
+      setAuthToken(data.login.token, data.login.user.id)
       setUser(data.login.user)
       setUsername('');
       setPassword('');

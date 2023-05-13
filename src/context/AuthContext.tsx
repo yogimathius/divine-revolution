@@ -9,7 +9,7 @@ interface User {
 
 interface AuthContextType {
   isLoggedIn: boolean;
-  setAuthToken: (token: string) => void;
+  setAuthToken: (token: string, userId: number) => void;
   logout: () => void;
   user: User;
   setUser: (user: User) => void;
@@ -17,14 +17,14 @@ interface AuthContextType {
 
 export const AuthContext = createContext<AuthContextType>({
   isLoggedIn: false,
-  setAuthToken: (token: string) => {},
+  setAuthToken: () => {},
   logout: () => {},
   user: {
     username: '',
     email: '',
     bio: '',
   },
-  setUser: (user: User) => {},
+  setUser: () => {},
 });
 
 interface Props {
@@ -41,10 +41,15 @@ export const AuthProvider = ({ children }: Props) => {
 
   const navigate = useNavigate()
 
-  const setAuthToken = (token: string) => {
+  const setAuthToken = (token: string, userId: number) => {
     localStorage.setItem('authToken', token);
+    setUserIdStorage(userId)
     setIsLoggedIn(true);
   };
+
+  const setUserIdStorage = (userId: number) => {
+    localStorage.setItem('userId', JSON.stringify(userId));
+  }
 
   const logout = () => {
     localStorage.removeItem('authToken');
