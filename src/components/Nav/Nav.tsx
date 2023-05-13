@@ -19,19 +19,23 @@ const Nav = () => {
             </div>
           </div>
           <div className="flex">
-            <NavLink
-              to="/"
-              end
-              className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/' ? 'bg-blue-600' : ''}`}
-            >
-              Home
-            </NavLink>
-            <NavLink
-              to="/profile"
-              className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/profile' ? 'bg-blue-600' : ''}`}
-            >
-              Profile
-            </NavLink>
+          {isLoggedIn ? (
+            <>
+              <NavLink
+                to="/"
+                end
+                className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/' ? 'bg-blue-600' : ''}`}
+              >
+                Home
+              </NavLink>
+              <NavLink
+                to="/profile"
+                className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/profile' ? 'bg-blue-600' : ''}`}
+              >
+                Profile
+              </NavLink>
+            </>
+          ) : null}
             {/* <NavLink
               to="/contact"
               className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/contact' ? 'bg-blue-600' : ''}`}
