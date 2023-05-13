@@ -6,6 +6,7 @@ export const loginMutation = gql`
       expiration
       token
       user {
+        id
         username
         email
         bio
