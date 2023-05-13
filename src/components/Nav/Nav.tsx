@@ -15,7 +15,7 @@ const Nav = () => {
               <img className="h-8 w-8" src="" alt="Logo" />
             </div>
             <div className="ml-4">
-              <h1 className="text-white text-lg font-bold">My App</h1>
+              <h1 className="text-white text-lg font-bold">Divine Revolution</h1>
             </div>
           </div>
           <div className="flex">
@@ -32,12 +32,12 @@ const Nav = () => {
             >
               Profile
             </NavLink>
-            <NavLink
+            {/* <NavLink
               to="/contact"
               className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/contact' ? 'bg-blue-600' : ''}`}
             >
               Contact
-            </NavLink>
+            </NavLink> */}
             {isLoggedIn ? (
               <button onClick={() => logout()} className="text-white hover:bg-blue-600 px-3 py-2 rounded-md">Logout</button>
             ) : (
