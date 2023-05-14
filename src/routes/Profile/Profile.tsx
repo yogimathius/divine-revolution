@@ -2,12 +2,20 @@ import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context';
 import useGetUserQuery from '../../graphql/hooks/useGetUserQuery';
 import { useLocalStorage } from '../../hooks';
-import { Show } from '../../components/Profile';
+import { Edit, Show } from '../../components/Profile';
+import useVisualMode from '../../hooks/useVisualMode';
+
+const SHOW = "SHOW";
+const EDIT = "EDIT";
+const SAVING = "SAVING";
 
 const ProfilePage = () => {
   const { user, setUser } = useContext(AuthContext);
   const [userId] = useLocalStorage("userId")
-
+  const { mode, transition, back } = useVisualMode(
+     SHOW
+  );
+  
   const { getUserData, loading, error, data }  = useGetUserQuery()
 
   useEffect(() => {
@@ -30,9 +38,28 @@ const ProfilePage = () => {
     )
   }
   
+  const handleSave = () => {
+    // Handle save logic
+  };
+
+  const handleCancel = () => {
+    back()
+  };
+
+  const handleEdit = () => {
+    transition(EDIT)
+  };
+
+
   return (
     <div className='h-screen mt-8 max-w-4xl w-full mx-4 sm:mx-auto '>
-      <Show user={user} />
+      {mode === SHOW ? (
+        <Show user={user} handleEdit={handleEdit} />
+      ) : null }
+
+      {mode === EDIT ? (
+        <Edit user={user} handleSave={handleSave} handleCancel={handleCancel} />
+      ) : null }
     </div>
   );
 };
