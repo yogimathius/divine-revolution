@@ -1,7 +1,9 @@
 import { ReactNode, createContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Scalars } from '../__generated__/graphql';
 
 interface User {
+  id: Scalars['ID'];
   username: string;
   email: string;
   bio: string;
@@ -20,6 +22,7 @@ export const AuthContext = createContext<AuthContextType>({
   setAuthToken: () => {},
   logout: () => {},
   user: {
+    id: '',
     username: '',
     email: '',
     bio: '',
@@ -34,6 +37,7 @@ interface Props {
 export const AuthProvider = ({ children }: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState({
+    id: '',
     username: '',
     email: '',
     bio: '',
