@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 const useLocalStorage = (key: string, initialValue?: string | number) => {
   const [value, setValue] = useState(() => {
     const storedValue = localStorage.getItem(key);
-    console.log(!storedValue, key);
+    
     if (!storedValue) {
       return initialValue
     } else {

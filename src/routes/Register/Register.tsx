@@ -12,15 +12,11 @@ const Register= () => {
   const navigate = useNavigate();
 
   const { error, registerUser } = useRegisterMutation()
-  // const { error: loginError, loginUser } = useLoginMutation()
 
   const handleRegister = async () => {
     const result = await registerUser(username, password)
-    console.log('success!', result);
+
     if (result && !result.errors) {
-      console.log('success in register: ', result);
-      
-      // const data = await loginUser(username, password)
       setAuthToken(result.register.token, result.register.user.id)
       setUser(result.register.user)
       setUsername('');

@@ -4,7 +4,6 @@ import { AuthContext } from '../../context';
 
 const Nav = () => {
   const { isLoggedIn, logout } = useContext(AuthContext);
-  console.log('nav logged in value:', isLoggedIn);
   
   return (
     <nav className="bg-blue-500 fixed max-w-4xl w-full mx-4 sm:mx-auto z-10 top-0 left-0 right-0">
