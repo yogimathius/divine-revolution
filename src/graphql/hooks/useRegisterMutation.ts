@@ -6,14 +6,13 @@ const useRegisterMutation = () => {
   const [register, { loading, error, data }] = useMutation(registerMutation);
 
   const registerUser = useCallback(
-    async (username: string, password: string, bio?: string, email?: string) => {
+    async ( username: string, password: string, bio?: string) => {
       try {
         const response = await register({
           variables: {
             username,
             password,
             bio,
-            email,
           },
         });
         return response.data

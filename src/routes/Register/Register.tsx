@@ -3,7 +3,6 @@ import { TextField, Button } from '@mui/material';
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from '../../context';
 import useRegisterMutation from '../../graphql/hooks/useRegisterMutation';
-import useLoginMutation from '../../graphql/hooks/useLoginMutation';
 
 const Register= () => {
   const [username, setUsername] = useState('');
@@ -13,27 +12,26 @@ const Register= () => {
   const navigate = useNavigate();
 
   const { error, registerUser } = useRegisterMutation()
-  const { error: loginError, loginUser } = useLoginMutation()
+  // const { error: loginError, loginUser } = useLoginMutation()
 
-  const handleLogin = async () => {
+  const handleRegister = async () => {
     const result = await registerUser(username, password)
     console.log('success!', result);
-    if (result) {
-      const data = await loginUser(username, password)
-      if (!loginError && data) {
-        setAuthToken(data.createUser.token, data.createUser.user.id)
-        setUser(data.createUser.user)
-        setUsername('');
-        setPassword('');
-        navigate('/')
-      }
+    if (result && !result.errors) {
+      console.log('success in register: ', result);
+      
+      // const data = await loginUser(username, password)
+      setAuthToken(result.register.token, result.register.user.id)
+      setUser(result.register.user)
+      setUsername('');
+      setPassword('');
+      navigate('/')
     }
   };
 
   return (
     <div className="flex flex-col items-center justify-center space-y-4 bg-blue-100 rounded-lg mx-auto p-24 h-max">
       {error ? <p>Oh no! {error.message}</p> : null}
-      {loginError ? <p>Oh no! {loginError.message}</p> : null}
       <h2 className="text-2xl font-semibold mb-2">Register</h2>
       <TextField
         label="Username"
@@ -51,7 +49,7 @@ const Register= () => {
         type="password"
         sx={{bgcolor: 'background.paper'}}
       />
-      <Button variant='contained' onClick={() => handleLogin()}>Register</Button>
+      <Button variant='contained' onClick={() => handleRegister()}>Register</Button>
     </div>
   );
 };
