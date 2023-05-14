@@ -7,6 +7,7 @@ export const updateUserMutation = gql`
       username
       email
       online
+      bio
     }
   }
 `
