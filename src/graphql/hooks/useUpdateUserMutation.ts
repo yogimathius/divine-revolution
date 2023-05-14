@@ -1,14 +1,15 @@
 import { useMutation } from '@apollo/client';
 import { useCallback } from 'react';
 import { updateUserMutation } from '../mutations';
+import { Scalars } from '../../__generated__/graphql';
 
 const useUpdateUserMutation = () => {
-  const [updateUser, { loading, error, data }] = useMutation(updateUserMutation);
+  const [query, { loading, error, data }] = useMutation(updateUserMutation);
 
-  const updateUserUser = useCallback(
-    async ( id: number, username?: string, email?: string, bio?: string) => {
+  const updateUser = useCallback(
+    async ( id: Scalars['ID'], username?: string, email?: string, bio?: string) => {
       try {
-        const response = await updateUser({
+        const response = await query({
           variables: {
             id,
             username,
@@ -23,10 +24,10 @@ const useUpdateUserMutation = () => {
         // Handle error if needed
       }
     },
-    [updateUser]
+    [query]
   );
 
-  return { loading, error, data, updateUserUser };
+  return { loading, error, data, updateUser };
 };
 
 export default useUpdateUserMutation;
