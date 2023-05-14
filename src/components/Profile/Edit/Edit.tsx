@@ -4,7 +4,7 @@ import { TextField, Button } from '@mui/material';
 
 interface Props {
   user: Partial<User>;
-  handleSave: () => void;
+  handleSave: (username?: string, email?: string, bio?: string) => void;
   handleCancel: () => void;
 }
 
@@ -26,11 +26,11 @@ const Edit = ({ user, handleSave, handleCancel }: Props) => {
         sx={{bgcolor: 'background.paper'}}
       />
       <TextField
-        label="Password"
+        label="Email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
-        autoComplete="current-password"
-        type="password"
+        autoComplete="current-email"
+        type="email"
         sx={{bgcolor: 'background.paper'}}
       />
       </div>
@@ -38,7 +38,7 @@ const Edit = ({ user, handleSave, handleCancel }: Props) => {
         <TextField label="Bio" value={bio} onChange={(e) => setBio(e.target.value)} />
       </div>
       <div className="flex justify-end mt-4">
-        <Button onClick={handleSave}>Save</Button>
+        <Button onClick={() => handleSave(username, email, bio)}>Save</Button>
         <Button onClick={handleCancel}>
           Cancel
         </Button>

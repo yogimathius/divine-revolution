@@ -4,6 +4,7 @@ import useGetUserQuery from '../../graphql/hooks/useGetUserQuery';
 import { useLocalStorage } from '../../hooks';
 import { Edit, Show } from '../../components/Profile';
 import useVisualMode from '../../hooks/useVisualMode';
+import { useUpdateUserMutation } from '../../graphql/hooks';
 
 const SHOW = "SHOW";
 const EDIT = "EDIT";
@@ -17,6 +18,9 @@ const ProfilePage = () => {
   );
   
   const { getUserData, loading, error, data }  = useGetUserQuery()
+
+  const { error: userUpdateError, updateUser } = useUpdateUserMutation()
+
 
   useEffect(() => {
     if (userId) {
@@ -38,8 +42,9 @@ const ProfilePage = () => {
     )
   }
   
-  const handleSave = () => {
-    // Handle save logic
+  const handleSave = (username?: string, email?: string, bio?: string) => {
+    updateUser(user.id, username, email, bio)
+      .then(() => transition(SHOW))
   };
 
   const handleCancel = () => {
@@ -53,6 +58,9 @@ const ProfilePage = () => {
 
   return (
     <div className='h-screen mt-8 max-w-4xl w-full mx-4 sm:mx-auto '>
+      {userUpdateError ? (
+        <div>{userUpdateError.message}</div>
+      ) : null}
       {mode === SHOW ? (
         <Show user={user} handleEdit={handleEdit} />
       ) : null }
