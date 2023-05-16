@@ -35,12 +35,12 @@ const Nav = () => {
               </NavLink>
             </>
           ) : null}
-            {/* <NavLink
-              to="/contact"
-              className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/contact' ? 'bg-blue-600' : ''}`}
+            <NavLink
+              to="/yoga"
+              className={`text-white hover:bg-blue-600 px-3 py-2 rounded-md ${location.pathname === '/yoga' ? 'bg-blue-600' : ''}`}
             >
-              Contact
-            </NavLink> */}
+              Yoga
+            </NavLink>
             {isLoggedIn ? (
               <button onClick={() => logout()} className="text-white hover:bg-blue-600 px-3 py-2 rounded-md">Logout</button>
             ) : (
