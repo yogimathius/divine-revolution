@@ -27,7 +27,8 @@ export interface UserYogaPose {
 
 type ExperienceContextType = {
   userYogaPoses: UserYogaPose[];
-  updateUserYogaPose: (newUserYogaPose: UserYogaPose) => void;
+  setUserYogaPoses: (newUserYogaPose: UserYogaPose[]) => void;
+  updateUserYogaPose: (newUserYogaPose: UserYogaPose[]) => void;
   // Add other experience-related types here
 };
 
@@ -43,8 +44,10 @@ type ExperienceProviderProps = {
 export const ExperienceProvider:  React.FC<ExperienceProviderProps> = ({ children }) => {
   const [userYogaPoses, setUserYogaPoses] = useState<UserYogaPose[]>([]);
 
-  const updateUserYogaPose = (newUserYogaPose: UserYogaPose) => {
-    setUserYogaPoses(prev => [...prev, newUserYogaPose]);
+  const updateUserYogaPose = (newUserYogaPose: UserYogaPose[]) => {
+    console.log(newUserYogaPose);
+    
+    setUserYogaPoses(prev => [...prev, ...newUserYogaPose]);
   };
 
   // Add other experience-related state and functions as needed
@@ -53,6 +56,7 @@ export const ExperienceProvider:  React.FC<ExperienceProviderProps> = ({ childre
     <ExperienceContext.Provider
       value={{
         userYogaPoses,
+        setUserYogaPoses,
         updateUserYogaPose,
         // Add other experience-related values here
       }}

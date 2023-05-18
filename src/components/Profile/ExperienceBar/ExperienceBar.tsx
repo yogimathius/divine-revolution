@@ -1,29 +1,29 @@
 import { useEffect, useState } from 'react';
 import { CircularProgress } from '@mui/material';
+import { useExperience } from '../../../context/ExperienceContext';
 
-interface UserYogaPose {
-  pose: {
-    poseId: string;
-    posePoints: number;
-  };
-}
 
 interface Props {
-  userYogaPoses: UserYogaPose[];
   userYogaPosesLoading: boolean;
 }
 
-const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
+const ExperienceBar = ({ userYogaPosesLoading }: Props) => {
   const [totalPoints, setTotalPoints] = useState(0);
   const [currentLevel, setCurrentLevel] = useState(1);
   const [maxPoints, setMaxPoints] = useState(1000);
+  const { userYogaPoses } = useExperience();
 
   useEffect(() => {
     if (userYogaPoses) {
+      console.log(userYogaPoses);
+      
       // Calculate the total points from userYogaPoses
       const points = userYogaPoses.reduce(
-        (accumulator, userYogaPose) =>
-          accumulator + userYogaPose.pose.posePoints,
+        (accumulator, userYogaPose) => {
+          console.log('user yoga pose: ', userYogaPose);
+          
+          return  accumulator + parseInt(userYogaPose.pose.posePoints)
+        },
         0
       );
       setTotalPoints(points);
