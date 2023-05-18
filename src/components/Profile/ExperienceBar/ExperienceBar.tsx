@@ -5,36 +5,37 @@ interface UserYogaPose {
   pose: {
     poseId: string;
     posePoints: number;
-  }
+  };
 }
 
 interface Props {
-  userYogaPoses: UserYogaPose[]
+  userYogaPoses: UserYogaPose[];
   userYogaPosesLoading: boolean;
 }
+
 const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
   const [totalPoints, setTotalPoints] = useState(0);
+  const [currentLevel, setCurrentLevel] = useState(1);
+  const [maxPoints, setMaxPoints] = useState(1000);
 
-  // console.log(userYogaPoses);
-  
   useEffect(() => {
     if (userYogaPoses) {
       // Calculate the total points from userYogaPoses
-      console.log('checks out', {userYogaPoses});
-      
       const points = userYogaPoses.reduce(
-        (accumulator, userYogaPose) => {
-          console.log('useryogaPose: ', userYogaPose)
-          return accumulator + userYogaPose.pose.posePoints
-        },
+        (accumulator, userYogaPose) =>
+          accumulator + userYogaPose.pose.posePoints,
         0
       );
-      console.log("points: ", points);
-      
       setTotalPoints(points);
-      // setIsLoading(false);
+
+      // Check if the total points have reached the maximum points for the current level
+      if (points >= maxPoints) {
+        // Increase the level and update the maximum points for the next level
+        setCurrentLevel((prevLevel) => prevLevel + 1);
+        setMaxPoints((prevMaxPoints) => prevMaxPoints * 1.2); // Increase the maximum points by 20% for the next level
+      }
     }
-  }, [userYogaPoses]);
+  }, [maxPoints, userYogaPoses]);
 
   if (userYogaPosesLoading) {
     return (
@@ -44,17 +45,15 @@ const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
     );
   }
 
-  const MAX_POINTS = 1000; // Set the maximum number of points required for the max level
-
   // Calculate the percentage of progress
-  const progressPercentage = (totalPoints / MAX_POINTS) * 100;
+  const progressPercentage = (totalPoints / maxPoints) * 100;
 
   return (
     <div>
       <div className="flex items-center justify-between">
         <div className="text-lg font-semibold text-gray-600">Experience</div>
         <div className="text-lg font-semibold text-gray-600">
-          {totalPoints} / {MAX_POINTS}
+          {totalPoints} / {maxPoints}
         </div>
       </div>
       <div className="h-4 bg-gray-300 rounded-md mt-2">
@@ -62,6 +61,9 @@ const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
           className="h-full bg-blue-500 rounded-md"
           style={{ width: `${progressPercentage}%` }}
         ></div>
+      </div>
+      <div className="mt-2 text-gray-600">
+        Level {currentLevel} - Next Level: {maxPoints} points
       </div>
     </div>
   );
