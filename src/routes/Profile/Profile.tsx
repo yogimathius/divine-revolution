@@ -2,9 +2,9 @@ import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context';
 import useGetUserQuery from '../../graphql/hooks/useGetUserQuery';
 import { useLocalStorage } from '../../hooks';
-import { Edit, Show } from '../../components/Profile';
+import { Edit, ExperienceBar, Show } from '../../components/Profile';
 import useVisualMode from '../../hooks/useVisualMode';
-import { useUpdateUserMutation } from '../../graphql/hooks';
+import { useGetUserYogaPosesQuery, useUpdateUserMutation } from '../../graphql/hooks';
 
 const SHOW = "SHOW";
 const EDIT = "EDIT";
@@ -19,14 +19,17 @@ const ProfilePage = () => {
   
   const { getUserData, loading, error, data }  = useGetUserQuery()
 
+  const { getUserYogaPoseData, data: userYogaPosesData, loading: userYogaPosesLoading }  = useGetUserYogaPosesQuery()
+
   const { error: userUpdateError, updateUser } = useUpdateUserMutation()
 
 
   useEffect(() => {
     if (userId) {
       getUserData(userId)
+      getUserYogaPoseData(userId)
     }
-  }, [getUserData, userId])
+  }, [getUserData, getUserYogaPoseData, userId, userYogaPosesData])
 
   useEffect(() => {
     if (data) {
@@ -34,7 +37,7 @@ const ProfilePage = () => {
     }
   }, [data, setUser, user])
 
-  if (loading && !user) {
+  if ((loading || userYogaPosesLoading) || !user || !userYogaPosesData) {
     return (
       <div className="bg-blue-500 text-white p-4 rounded shadow">
         Loading...
@@ -54,7 +57,8 @@ const ProfilePage = () => {
   const handleEdit = () => {
     transition(EDIT)
   };
-
+  console.log(userYogaPosesData.userYogaPoses);
+  
 
   return (
     <div className='h-screen mt-8 max-w-4xl w-full mx-4 sm:mx-auto '>
@@ -62,7 +66,10 @@ const ProfilePage = () => {
         <div>{userUpdateError.message}</div>
       ) : null}
       {mode === SHOW ? (
-        <Show user={user} handleEdit={handleEdit} />
+        <>
+          <Show user={user} handleEdit={handleEdit} />
+          <ExperienceBar userYogaPoses={userYogaPosesData.userYogaPoses} userYogaPosesLoading={userYogaPosesLoading}/>
+        </>
       ) : null }
 
       {mode === EDIT ? (
