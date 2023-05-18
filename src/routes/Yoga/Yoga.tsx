@@ -1,7 +1,8 @@
 import { useContext } from "react";
 import { AuthContext } from "../../context";
-import { useCompleteYogaPoseMutation, useGetYogaPosesQuery } from "../../graphql/hooks";
+import { useGetYogaPosesQuery } from "../../graphql/hooks";
 import { CircularProgress, Button } from "@mui/material";
+import CompleteYogaPose from "../../components/Yoga/CompleteYogaPose";
 
 interface YogaPose {
   poseId: string;
@@ -12,7 +13,6 @@ interface YogaPose {
 
 const Yoga = () => {
   const { loading, error, data } = useGetYogaPosesQuery();
-  const { error: completeYogaPoseError, completeYogaPose } = useCompleteYogaPoseMutation()
   const { user } = useContext(AuthContext);
 
   if (loading) {
@@ -41,14 +41,10 @@ const Yoga = () => {
           <h3 className="text-lg font-bold mb-2">{pose.poseName}</h3>
           <p className="text-gray-600">{pose.poseDescription}</p>
           <p className="mt-2">Pose Points: {pose.posePoints}</p>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => completeYogaPose(user.id, pose.poseId, new Date().toISOString())}
-            className="mt-4"
-          >
-            Complete Pose
-          </Button>
+          <CompleteYogaPose
+            userId={user.id}
+            poseId={pose.poseId}
+          />
         </div>
       ))}
     </div>
