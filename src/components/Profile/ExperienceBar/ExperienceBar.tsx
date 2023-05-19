@@ -6,7 +6,6 @@ import { UserYogaPose } from '../../../context/ExperienceContext';
 
 interface Props {
   userYogaPoses: UserYogaPose[]
-  userYogaPosesLoading: boolean;
 }
 
 const colors = [
@@ -51,7 +50,7 @@ const generateTitle = (currentLevel: number) => {
 };
 
 
-const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
+const ExperienceBar = ({ userYogaPoses }: Props) => {
   const [totalPoints, setTotalPoints] = useState(0);
   const [currentLevel, setCurrentLevel] = useState(1);
   const [maxPoints, setMaxPoints] = useState(70);
@@ -84,20 +83,20 @@ const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
     }
   }, [currentLevel]);
 
-  if (userYogaPosesLoading) {
-    return (
-      <div className="flex justify-center items-center h-16">
-        <CircularProgress />
-      </div>
-    );
-  }
+  // if (userYogaPosesLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-16">
+  //       <CircularProgress />
+  //     </div>
+  //   );
+  // }
   const title = generateTitle(currentLevel);
 
   // Calculate the percentage of progress
   const progressPercentage = (totalPoints / maxPoints) * 100;
 
   return (
-    <div>
+    <div className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
       <div className="flex items-center justify-between">
         <div className="text-lg font-semibold text-gray-600">Experience</div>
         <div className="text-lg font-semibold text-gray-600">
@@ -105,7 +104,7 @@ const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
         </div>
       </div>
       <div className="h-4 bg-gray-300 rounded-md mt-2">
-      <div
+        <div
           className={`h-full rounded-md ${barColor}`}
           style={{ width: `${progressPercentage}%` }}
         ></div>
