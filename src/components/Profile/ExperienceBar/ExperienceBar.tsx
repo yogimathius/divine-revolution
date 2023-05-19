@@ -96,7 +96,7 @@ const ExperienceBar = ({ userYogaPoses }: Props) => {
   const progressPercentage = (totalPoints / maxPoints) * 100;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 p-4 bg-white shadow-lg">
+    <div className="fixed bottom-0 left-0 right-0 max-w-4xl w-full mx-4 sm:mx-auto p-4 bg-white shadow-lg">
       <div className="flex items-center justify-between">
         <div className="text-lg font-semibold text-gray-600">Experience</div>
         <div className="text-lg font-semibold text-gray-600">

@@ -13,7 +13,7 @@ interface AuthContextType {
   isLoggedIn: boolean;
   setAuthToken: (token: string, userId: number) => void;
   logout: () => void;
-  user: User;
+  user: User | null;
   setUser: (user: User) => void;
 }
 
@@ -36,12 +36,7 @@ interface Props {
 
 export const AuthProvider = ({ children }: Props) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [user, setUser] = useState({
-    id: '',
-    username: '',
-    email: '',
-    bio: '',
-  });
+  const [user, setUser] = useState<User | null>(null);
 
   const navigate = useNavigate()
 

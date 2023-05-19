@@ -12,9 +12,18 @@ const ProfilePage = () => {
   const { mode, transition, back } = useVisualMode(
      SHOW
   );
-  const { user, setUser } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const { error: userUpdateError, updateUser } = useUpdateUserMutation()
+
+    
+  if (!user) {
+    return (
+      <div className="bg-blue-500 text-white p-4 rounded shadow">
+        Loading...
+      </div>
+    )
+  }
 
   const handleSave = (username?: string, email?: string, bio?: string) => {
     updateUser(user.id, username, email, bio)
@@ -28,7 +37,6 @@ const ProfilePage = () => {
   const handleEdit = () => {
     transition(EDIT)
   };
-  
 
   return (
     <div className='h-screen mt-8 max-w-4xl w-full mx-4 sm:mx-auto '>

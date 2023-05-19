@@ -4,9 +4,13 @@ const useLocalStorage = (key: string, initialValue?: string | number) => {
   const [value, setValue] = useState(() => {
     const storedValue = localStorage.getItem(key);
     
-    if (!storedValue) {
+    if (!storedValue || storedValue === "undefined") {
+      console.log(initialValue);
+      
       return initialValue
     } else {
+      console.log(storedValue, !storedValue, storedValue === "undefined");
+      
       return JSON.parse(storedValue)
     }
   });

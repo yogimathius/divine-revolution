@@ -28,29 +28,16 @@ const Root = () => {
     }
   }, [data, setUser, user])
 
-  // useEffect(() => {
-  //   if (userYogaPosesData) {
-  //     console.log('checks out');
-      
-  //     setUserYogaPoses(userYogaPosesData.userYogaPoses)
-  //   }
-  // }, [setUserYogaPoses, userYogaPosesData])
-
-  if ((loading || !userYogaPoses) || !user) {
-    return (
-      <div className="bg-blue-500 text-white p-4 rounded shadow">
-        Loading...
-      </div>
-    )
-  }
-  console.log(userYogaPoses);
-
+  console.log(userYogaPoses, user);
 
   return (
     <>
       <Nav />
       <Outlet />
-      <ExperienceBar userYogaPoses={userYogaPoses} />
+      {user ? (
+        <ExperienceBar userYogaPoses={userYogaPoses} />
+
+      ) : null}
     </>
   )
 }

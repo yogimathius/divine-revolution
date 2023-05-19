@@ -15,7 +15,7 @@ const Yoga = () => {
   const { loading, error, data } = useGetYogaPosesQuery();
   const { user } = useContext(AuthContext);
 
-  if (loading) {
+  if (loading || !user) {
     return (
       <div className="flex justify-center items-center h-screen">
         <CircularProgress />

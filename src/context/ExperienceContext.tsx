@@ -28,6 +28,7 @@ export interface UserYogaPose {
 }
 
 type ExperienceContextType = {
+  loading: boolean;
   userYogaPoses: UserYogaPose[];
   setUserYogaPoses: (newUserYogaPose: UserYogaPose[]) => void;
   refetch: (variables: {id: Scalars['ID']}) => void;
@@ -37,7 +38,6 @@ type ExperienceContextType = {
 export const ExperienceContext = createContext<ExperienceContextType>(
   {} as ExperienceContextType
 );
-
 
 type ExperienceProviderProps = {
   children: ReactNode;
@@ -59,6 +59,7 @@ export const ExperienceProvider:  React.FC<ExperienceProviderProps> = ({ childre
   return (
     <ExperienceContext.Provider
       value={{
+        loading,
         userYogaPoses,
         setUserYogaPoses,
         refetch,
