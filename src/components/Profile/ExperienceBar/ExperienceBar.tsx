@@ -7,6 +7,27 @@ import { UserYogaPose } from '../../../context/ExperienceContext';
 interface Props {
   userYogaPoses: UserYogaPose[]
 }
+import { useMemo } from 'react';
+
+const useGenerateExperiencePoints = () => {
+  const maxPoints = 70;
+  const increaseFactor = 1.2;
+  const numLevels = 35;
+
+  const experiencePoints = useMemo(() => {
+    const points = [];
+    let currentPoints = maxPoints;
+
+    for (let i = 0; i < numLevels; i++) {
+      points.push(currentPoints);
+      currentPoints = Math.round(currentPoints * increaseFactor);
+    }
+
+    return points;
+  }, []);
+
+  return experiencePoints;
+};
 
 const colors = [
   'bg-green-500',
@@ -56,6 +77,8 @@ const ExperienceBar = ({ userYogaPoses }: Props) => {
   const [maxPoints, setMaxPoints] = useState(70);
   const [barColor, setBarColor] = useState('bg-blue-500'); // Default color
 
+  const experiencePoints = useGenerateExperiencePoints()
+
   useEffect(() => {
     if (userYogaPoses) {
       // Calculate the total points from userYogaPoses
@@ -64,16 +87,25 @@ const ExperienceBar = ({ userYogaPoses }: Props) => {
           accumulator + parseInt(userYogaPose.pose.posePoints, 10),
         0
       );
-      setTotalPoints(points);
-
       // Check if the total points have reached the maximum points for the current level
-      if (points >= maxPoints) {
+      if (totalPoints >= maxPoints) {
         // Increase the level and update the maximum points for the next level
         setCurrentLevel((prevLevel) => prevLevel + 1);
-        setMaxPoints((prevMaxPoints) => Math.round(prevMaxPoints * 1.2)); // Increase the maximum points by 20% for the next level
+        setMaxPoints(() => experiencePoints[currentLevel]); // Increase the maximum points by 20% for the next level
+        
+        // Reset the total points to 0 for the new level
+        setTotalPoints(0);
+      } else if (currentLevel > 1) {
+        console.log('prev: ' ,experiencePoints[currentLevel - 1]);
+        console.log('total: ' ,points);
+        
+        console.log('curr: ' , experiencePoints[currentLevel]);
+        setTotalPoints(points - experiencePoints[currentLevel - 1]);
+      } else {
+        setTotalPoints(points)
       }
     }
-  }, [maxPoints, userYogaPoses]);
+  }, [currentLevel, experiencePoints, maxPoints, totalPoints, userYogaPoses]);  
 
   useEffect(() => {
     // Change the color every 5 levels up to level 35
