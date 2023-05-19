@@ -10,7 +10,6 @@ interface Props {
 }
 
 const colors = [
-  'bg-blue-500',
   'bg-green-500',
   'bg-yellow-500',
   'bg-red-500',
@@ -18,6 +17,39 @@ const colors = [
   'bg-teal-500',
   'bg-pink-500',
 ];
+
+const generateTitle = (currentLevel: number) => {
+  const titles = [
+    "Seeker of Serenity",
+    "Guardian of Balance",
+    "Master of Tranquility",
+    "Enlightened Sage",
+    "Zen Mystic",
+    "Harmony's Whisper",
+    "Eternal Yogi",
+    "Divine Illuminator",
+    "Soulful Navigator",
+    "Mystic Oracle",
+    "Sage of Serenity",
+    "Enlightened Visionary",
+    "Whispering Zen",
+    "Radiant Presence",
+    "Wisdom's Keeper",
+    "Transcendent One",
+    "Infinite Bliss",
+    "Divine Ascendant",
+    "Celestial Sage",
+    "Keeper of Inner Peace"
+  ];
+
+  if (currentLevel % 5 <= titles.length) {
+    return titles[currentLevel % 5];
+  }
+
+  // If the level exceeds the number of titles, return a generic title
+  return "Yoga Master";
+};
+
 
 const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
   const [totalPoints, setTotalPoints] = useState(0);
@@ -59,6 +91,7 @@ const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
       </div>
     );
   }
+  const title = generateTitle(currentLevel);
 
   // Calculate the percentage of progress
   const progressPercentage = (totalPoints / maxPoints) * 100;
@@ -80,6 +113,7 @@ const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
       <div className="mt-2 text-gray-600">
         Level {currentLevel} - Next Level: {maxPoints} points
       </div>
+      <div className="mt-2 text-sm text-gray-500">{title}</div>
     </div>
   );
 };
