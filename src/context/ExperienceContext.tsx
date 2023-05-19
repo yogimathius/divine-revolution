@@ -1,8 +1,10 @@
-import { ReactNode, createContext, useContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useEffect, useState } from 'react';
+import { useGetUserYogaPosesQuery } from '../graphql/hooks';
+import { Scalars } from '../__generated__/graphql';
 
 // Define the types for experiences
 interface User {
-  id: number;
+  id: Scalars['ID'];
   username: string;
   password: string;
   online: boolean;
@@ -28,11 +30,11 @@ export interface UserYogaPose {
 type ExperienceContextType = {
   userYogaPoses: UserYogaPose[];
   setUserYogaPoses: (newUserYogaPose: UserYogaPose[]) => void;
-  updateUserYogaPose: (newUserYogaPose: UserYogaPose[]) => void;
+  refetch: (variables: {id: Scalars['ID']}) => void;
   // Add other experience-related types here
 };
 
-const ExperienceContext = createContext<ExperienceContextType>(
+export const ExperienceContext = createContext<ExperienceContextType>(
   {} as ExperienceContextType
 );
 
@@ -44,12 +46,14 @@ type ExperienceProviderProps = {
 export const ExperienceProvider:  React.FC<ExperienceProviderProps> = ({ children }) => {
   const [userYogaPoses, setUserYogaPoses] = useState<UserYogaPose[]>([]);
 
-  const updateUserYogaPose = (newUserYogaPose: UserYogaPose[]) => {
-    console.log(newUserYogaPose);
-    
-    setUserYogaPoses(prev => [...prev, ...newUserYogaPose]);
-  };
+  const { data, loading, refetch } = useGetUserYogaPosesQuery();
 
+  useEffect(() => {
+    if (data) {
+      setUserYogaPoses(data.userYogaPoses);
+    }
+  }, [data]);
+  
   // Add other experience-related state and functions as needed
 
   return (
@@ -57,7 +61,7 @@ export const ExperienceProvider:  React.FC<ExperienceProviderProps> = ({ childre
       value={{
         userYogaPoses,
         setUserYogaPoses,
-        updateUserYogaPose,
+        refetch,
         // Add other experience-related values here
       }}
     >
@@ -65,6 +69,3 @@ export const ExperienceProvider:  React.FC<ExperienceProviderProps> = ({ childre
     </ExperienceContext.Provider>
   );
 };
-
-export const useExperience = (): ExperienceContextType =>
-  useContext(ExperienceContext);
