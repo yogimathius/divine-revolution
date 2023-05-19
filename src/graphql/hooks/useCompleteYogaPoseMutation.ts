@@ -1,12 +1,13 @@
 import { useMutation } from '@apollo/client';
 import { useCallback } from 'react';
 import { completeYogaPoseMutation } from '../mutations';
+import { Scalars } from '../../__generated__/graphql';
 
 const useCompleteYogaPoseMutation = () => {
   const [execute, { loading, error, data }] = useMutation(completeYogaPoseMutation);
 
   const completeYogaPose = useCallback(
-    async ( userId: string, poseId: string, completionDate: string) => {
+    async ( userId: Scalars['ID'], poseId: string, completionDate: string) => {
       try {
         const response = await execute({
           variables: {

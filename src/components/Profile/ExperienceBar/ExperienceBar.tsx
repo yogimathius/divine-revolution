@@ -1,29 +1,36 @@
 import { useEffect, useState } from 'react';
 import { CircularProgress } from '@mui/material';
-import { useExperience } from '../../../context/ExperienceContext';
+import { useExperience } from '../../../context/useExperience';
+import { UserYogaPose } from '../../../context/ExperienceContext';
 
 
 interface Props {
+  userYogaPoses: UserYogaPose[]
   userYogaPosesLoading: boolean;
 }
 
-const ExperienceBar = ({ userYogaPosesLoading }: Props) => {
+const colors = [
+  'bg-blue-500',
+  'bg-green-500',
+  'bg-yellow-500',
+  'bg-red-500',
+  'bg-purple-500',
+  'bg-teal-500',
+  'bg-pink-500',
+];
+
+const ExperienceBar = ({ userYogaPoses, userYogaPosesLoading }: Props) => {
   const [totalPoints, setTotalPoints] = useState(0);
   const [currentLevel, setCurrentLevel] = useState(1);
-  const [maxPoints, setMaxPoints] = useState(1000);
-  const { userYogaPoses } = useExperience();
+  const [maxPoints, setMaxPoints] = useState(70);
+  const [barColor, setBarColor] = useState('bg-blue-500'); // Default color
 
   useEffect(() => {
     if (userYogaPoses) {
-      console.log(userYogaPoses);
-      
       // Calculate the total points from userYogaPoses
       const points = userYogaPoses.reduce(
-        (accumulator, userYogaPose) => {
-          console.log('user yoga pose: ', userYogaPose);
-          
-          return  accumulator + parseInt(userYogaPose.pose.posePoints)
-        },
+        (accumulator, userYogaPose) =>
+          accumulator + parseInt(userYogaPose.pose.posePoints, 10),
         0
       );
       setTotalPoints(points);
@@ -32,10 +39,18 @@ const ExperienceBar = ({ userYogaPosesLoading }: Props) => {
       if (points >= maxPoints) {
         // Increase the level and update the maximum points for the next level
         setCurrentLevel((prevLevel) => prevLevel + 1);
-        setMaxPoints((prevMaxPoints) => prevMaxPoints * 1.2); // Increase the maximum points by 20% for the next level
+        setMaxPoints((prevMaxPoints) => Math.round(prevMaxPoints * 1.2)); // Increase the maximum points by 20% for the next level
       }
     }
   }, [maxPoints, userYogaPoses]);
+
+  useEffect(() => {
+    // Change the color every 5 levels up to level 35
+    if (currentLevel <= 35 && currentLevel % 5 === 0) {
+      const colorIndex = Math.floor((currentLevel - 1) / 5) % 7;
+      setBarColor(colors[colorIndex]);
+    }
+  }, [currentLevel]);
 
   if (userYogaPosesLoading) {
     return (
@@ -57,8 +72,8 @@ const ExperienceBar = ({ userYogaPosesLoading }: Props) => {
         </div>
       </div>
       <div className="h-4 bg-gray-300 rounded-md mt-2">
-        <div
-          className="h-full bg-blue-500 rounded-md"
+      <div
+          className={`h-full rounded-md ${barColor}`}
           style={{ width: `${progressPercentage}%` }}
         ></div>
       </div>

@@ -5,7 +5,7 @@ import { useLocalStorage } from '../../hooks';
 import { Edit, ExperienceBar, Show } from '../../components/Profile';
 import useVisualMode from '../../hooks/useVisualMode';
 import { useGetUserYogaPosesQuery, useUpdateUserMutation } from '../../graphql/hooks';
-import { useExperience } from '../../context/ExperienceContext';
+import { useExperience } from '../../context/useExperience';
 
 const SHOW = "SHOW";
 const EDIT = "EDIT";
@@ -20,7 +20,7 @@ const ProfilePage = () => {
   
   const { getUserData, loading, error, data }  = useGetUserQuery()
 
-  const { getUserYogaPoseData, data: userYogaPosesData, loading: userYogaPosesLoading }  = useGetUserYogaPosesQuery()
+  const { getUserYogaPoseData, data: userYogaPosesData, loading: userYogaPosesLoading } = useGetUserYogaPosesQuery()
   const { userYogaPoses, setUserYogaPoses } = useExperience();
 
   const { error: userUpdateError, updateUser } = useUpdateUserMutation()
@@ -43,6 +43,8 @@ const ProfilePage = () => {
 
   useEffect(() => {
     if (userYogaPosesData) {
+      console.log('checks out');
+      
       setUserYogaPoses(userYogaPosesData.userYogaPoses)
     }
   }, [setUserYogaPoses, userYogaPosesData])
@@ -78,7 +80,7 @@ const ProfilePage = () => {
       {mode === SHOW ? (
         <>
           <Show user={user} handleEdit={handleEdit} />
-          <ExperienceBar userYogaPosesLoading={userYogaPosesLoading}/>
+          <ExperienceBar userYogaPoses={userYogaPoses} userYogaPosesLoading={userYogaPosesLoading}/>
         </>
       ) : null }
 
