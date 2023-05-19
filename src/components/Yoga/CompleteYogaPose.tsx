@@ -13,7 +13,7 @@ const CompleteYogaPose: React.FC<{
   const handleCompleteYogaPose = () => {
     completeYogaPose(userId, poseId, new Date().toISOString())
       .then((updatedUserYogaPose) => {
-        console.log('success: ', updatedUserYogaPose);
+        console.log('in fetch: ', userId);
         
         refetch({id: userId});
       })

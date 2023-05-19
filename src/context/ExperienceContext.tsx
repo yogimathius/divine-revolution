@@ -32,6 +32,7 @@ type ExperienceContextType = {
   userYogaPoses: UserYogaPose[];
   setUserYogaPoses: (newUserYogaPose: UserYogaPose[]) => void;
   refetch: (variables: {id: Scalars['ID']}) => void;
+  getUserYogaPoseData: (id: Scalars["ID"]) => void;
   // Add other experience-related types here
 };
 
@@ -46,7 +47,7 @@ type ExperienceProviderProps = {
 export const ExperienceProvider:  React.FC<ExperienceProviderProps> = ({ children }) => {
   const [userYogaPoses, setUserYogaPoses] = useState<UserYogaPose[]>([]);
 
-  const { data, loading, refetch } = useGetUserYogaPosesQuery();
+  const { getUserYogaPoseData, data, loading, refetch } = useGetUserYogaPosesQuery();
 
   useEffect(() => {
     if (data) {
@@ -63,6 +64,7 @@ export const ExperienceProvider:  React.FC<ExperienceProviderProps> = ({ childre
         userYogaPoses,
         setUserYogaPoses,
         refetch,
+        getUserYogaPoseData
         // Add other experience-related values here
       }}
     >

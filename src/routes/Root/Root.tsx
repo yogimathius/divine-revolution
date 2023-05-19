@@ -12,15 +12,16 @@ const Root = () => {
   const { getUserData, loading, data }  = useGetUserQuery()
   const { user, setUser } = useContext(AuthContext);
 
-  const { userYogaPoses, setUserYogaPoses } = useExperience();
+  const { userYogaPoses, getUserYogaPoseData } = useExperience();
 
   useEffect(() => {
     if (userId) {
       console.log('triggering');
       
       getUserData(userId)
+      getUserYogaPoseData(userId)
     }
-  }, [getUserData, userId])
+  }, [getUserData, getUserYogaPoseData, userId])
 
   useEffect(() => {
     if (data) {
