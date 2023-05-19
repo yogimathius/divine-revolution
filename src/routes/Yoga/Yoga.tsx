@@ -27,8 +27,6 @@ const Yoga = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log('in yoga: ', user.id);
-  
   return (
     <div className="container mx-auto py-8 mt-8">
       <h2 className="text-2xl font-bold mb-4">Yoga Poses</h2>

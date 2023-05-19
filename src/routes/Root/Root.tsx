@@ -16,8 +16,6 @@ const Root = () => {
 
   useEffect(() => {
     if (userId) {
-      console.log('triggering');
-      
       getUserData(userId)
       getUserYogaPoseData(userId)
     }
@@ -29,7 +27,6 @@ const Root = () => {
     }
   }, [data, setUser, user])
 
-  console.log(userYogaPoses, user);
 
   return (
     <>

@@ -12,9 +12,7 @@ const CompleteYogaPose: React.FC<{
 
   const handleCompleteYogaPose = () => {
     completeYogaPose(userId, poseId, new Date().toISOString())
-      .then((updatedUserYogaPose) => {
-        console.log('in fetch: ', userId);
-        
+      .then(() => {
         refetch({id: userId});
       })
       .catch((error) => {
