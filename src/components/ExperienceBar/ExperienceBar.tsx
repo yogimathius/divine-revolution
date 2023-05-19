@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { UserYogaPose } from '../../../context/ExperienceContext';
+import { UserYogaPose } from '../../context/ExperienceContext';
 
 
 interface Props {
@@ -91,9 +91,7 @@ const ExperienceBar = ({ userYogaPoses }: Props) => {
         setCurrentLevel((prevLevel) => prevLevel + 1);
         setMaxPoints(() => experiencePoints[currentLevel]); 
         setPrevPoints((prev) => prev + experiencePoints[currentLevel-1]); 
-      } 
-
-
+      }
     }
   }, [currentLevel, experiencePoints, maxPoints, prevPoints, totalPoints, userYogaPoses]);  
 
