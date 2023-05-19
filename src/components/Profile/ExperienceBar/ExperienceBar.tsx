@@ -1,6 +1,4 @@
 import { useEffect, useState } from 'react';
-import { CircularProgress } from '@mui/material';
-import { useExperience } from '../../../context/useExperience';
 import { UserYogaPose } from '../../../context/ExperienceContext';
 
 
@@ -62,12 +60,12 @@ const generateTitle = (currentLevel: number) => {
     "Keeper of Inner Peace"
   ];
 
-  if (currentLevel % 5 <= titles.length) {
-    return titles[currentLevel % 5];
+  if (currentLevel <= titles.length * 5) {
+    return titles[Math.floor(currentLevel / 5)];
   }
 
   // If the level exceeds the number of titles, return a generic title
-  return "Yoga Master";
+  return "Master";
 };
 
 
@@ -75,37 +73,29 @@ const ExperienceBar = ({ userYogaPoses }: Props) => {
   const [totalPoints, setTotalPoints] = useState(0);
   const [currentLevel, setCurrentLevel] = useState(1);
   const [maxPoints, setMaxPoints] = useState(70);
+  const [prevPoints, setPrevPoints] = useState(0);
   const [barColor, setBarColor] = useState('bg-blue-500'); // Default color
 
   const experiencePoints = useGenerateExperiencePoints()
 
   useEffect(() => {
     if (userYogaPoses) {
-      // Calculate the total points from userYogaPoses
       const points = userYogaPoses.reduce(
         (accumulator, userYogaPose) =>
           accumulator + parseInt(userYogaPose.pose.posePoints, 10),
         0
       );
-      // Check if the total points have reached the maximum points for the current level
-      if (totalPoints >= maxPoints) {
-        // Increase the level and update the maximum points for the next level
+
+      setTotalPoints(points)
+      if ((totalPoints - prevPoints) >= maxPoints) {
         setCurrentLevel((prevLevel) => prevLevel + 1);
-        setMaxPoints(() => experiencePoints[currentLevel]); // Increase the maximum points by 20% for the next level
-        
-        // Reset the total points to 0 for the new level
-        setTotalPoints(0);
-      } else if (currentLevel > 1) {
-        console.log('prev: ' ,experiencePoints[currentLevel - 1]);
-        console.log('total: ' ,points);
-        
-        console.log('curr: ' , experiencePoints[currentLevel]);
-        setTotalPoints(points - experiencePoints[currentLevel - 1]);
-      } else {
-        setTotalPoints(points)
-      }
+        setMaxPoints(() => experiencePoints[currentLevel]); 
+        setPrevPoints((prev) => prev + experiencePoints[currentLevel-1]); 
+      } 
+
+
     }
-  }, [currentLevel, experiencePoints, maxPoints, totalPoints, userYogaPoses]);  
+  }, [currentLevel, experiencePoints, maxPoints, prevPoints, totalPoints, userYogaPoses]);  
 
   useEffect(() => {
     // Change the color every 5 levels up to level 35
@@ -115,24 +105,15 @@ const ExperienceBar = ({ userYogaPoses }: Props) => {
     }
   }, [currentLevel]);
 
-  // if (userYogaPosesLoading) {
-  //   return (
-  //     <div className="flex justify-center items-center h-16">
-  //       <CircularProgress />
-  //     </div>
-  //   );
-  // }
   const title = generateTitle(currentLevel);
-
-  // Calculate the percentage of progress
-  const progressPercentage = (totalPoints / maxPoints) * 100;
+  const progressPercentage = ((totalPoints - prevPoints) / maxPoints) * 100;
 
   return (
     <div className="fixed bottom-0 left-0 right-0 max-w-4xl w-full mx-4 sm:mx-auto p-4 bg-white shadow-lg">
       <div className="flex items-center justify-between">
         <div className="text-lg font-semibold text-gray-600">Experience</div>
         <div className="text-lg font-semibold text-gray-600">
-          {totalPoints} / {maxPoints}
+          {(totalPoints - prevPoints)} / {maxPoints}
         </div>
       </div>
       <div className="h-4 bg-gray-300 rounded-md mt-2">
