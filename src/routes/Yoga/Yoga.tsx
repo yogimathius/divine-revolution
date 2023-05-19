@@ -27,26 +27,28 @@ const Yoga = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  console.log(user);
+  console.log('in yoga: ', user.id);
   
   return (
     <div className="container mx-auto py-8 mt-8">
       <h2 className="text-2xl font-bold mb-4">Yoga Poses</h2>
 
-      {data?.yogaPoses.map((pose: YogaPose) => (
-        <div
-          key={pose.poseName}
-          className="bg-white rounded-lg shadow-md p-4 mb-4"
-        >
-          <h3 className="text-lg font-bold mb-2">{pose.poseName}</h3>
-          <p className="text-gray-600">{pose.poseDescription}</p>
-          <p className="mt-2">Pose Points: {pose.posePoints}</p>
-          <CompleteYogaPose
-            userId={user.id}
-            poseId={pose.poseId}
-          />
-        </div>
-      ))}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {data?.yogaPoses.map((pose: YogaPose) => (
+          <div
+            key={pose.poseName}
+            className="flex flex-col justify-between bg-white rounded-lg shadow-md p-4 mb-4 space-y-2"
+          >
+            <h3 className="text-lg font-bold mb-2">{pose.poseName}</h3>
+            <p className="text-gray-600">{pose.poseDescription}</p>
+            <p className="mt-2">Pose Points: {pose.posePoints}</p>
+            <CompleteYogaPose
+              userId={user.id}
+              poseId={pose.poseId}
+            />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
