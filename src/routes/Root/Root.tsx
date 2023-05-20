@@ -31,11 +31,10 @@ const Root = () => {
   return (
     <>
       <Nav />
-      <Outlet />
-      {user ? (
-        <ExperienceBar userYogaPoses={userYogaPoses} />
-
-      ) : null}
+      <div className="mb-16"> {/* Add margin-bottom to create space */}
+        <Outlet />
+        {user ? <ExperienceBar userYogaPoses={userYogaPoses} /> : null}
+      </div>
     </>
   )
 }
