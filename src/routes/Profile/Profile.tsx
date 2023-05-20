@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { AuthContext } from '../../context';
-import { Edit, Show } from '../../components/Profile';
+import { CompletedYoga, Edit, Show } from '../../components/Profile';
 import useVisualMode from '../../hooks/useVisualMode';
 import {  useUpdateUserMutation } from '../../graphql/hooks';
 
@@ -46,6 +46,7 @@ const ProfilePage = () => {
       {mode === SHOW ? (
         <>
           <Show user={user} handleEdit={handleEdit} />
+          <CompletedYoga />
         </>
       ) : null }
 

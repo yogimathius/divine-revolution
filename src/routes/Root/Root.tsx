@@ -9,7 +9,7 @@ import { useLocalStorage } from '../../hooks'
 
 const Root = () => {
   const [userId] = useLocalStorage("userId")
-  const { getUserData, loading, data }  = useGetUserQuery()
+  const { getUserData, data }  = useGetUserQuery()
   const { user, setUser } = useContext(AuthContext);
 
   const { userYogaPoses, getUserYogaPoseData } = useExperience();
