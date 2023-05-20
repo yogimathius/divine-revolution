@@ -1,31 +1,11 @@
 import { useEffect, useState } from 'react';
 import { UserYogaPose } from '../../context/ExperienceContext';
+import useGenerateExperiencePoints from '../../hooks/useGenerateExperienceArray';
 
 
 interface Props {
   userYogaPoses: UserYogaPose[]
 }
-import { useMemo } from 'react';
-
-const useGenerateExperiencePoints = () => {
-  const maxPoints = 70;
-  const increaseFactor = 1.2;
-  const numLevels = 35;
-
-  const experiencePoints = useMemo(() => {
-    const points = [];
-    let currentPoints = maxPoints;
-
-    for (let i = 0; i < numLevels; i++) {
-      points.push(currentPoints);
-      currentPoints = Math.round(currentPoints * increaseFactor);
-    }
-
-    return points;
-  }, []);
-
-  return experiencePoints;
-};
 
 const colors = [
   'bg-green-500',
@@ -76,7 +56,7 @@ const ExperienceBar = ({ userYogaPoses }: Props) => {
   const [prevPoints, setPrevPoints] = useState(0);
   const [barColor, setBarColor] = useState('bg-blue-500'); // Default color
 
-  const experiencePoints = useGenerateExperiencePoints()
+  const experiencePoints = useGenerateExperiencePoints(70)
 
   useEffect(() => {
     if (userYogaPoses) {
