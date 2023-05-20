@@ -41,27 +41,27 @@ const YogaPoseTracker = ({ pose, progress }: Props) => {
 
   return (
     <div>
-      <div className="w-64 bg-white rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+      <div className="bg-white rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
         <div className="p-4">
+            <p className="text-right text-xs text-gray-500">Lvl: {level}</p>
           <div className='flex justify-between'>
-            <h4 className="text font-bold mb-2">{pose}</h4>
-            <p className="text-sm text-gray-500">Lvl: {level}</p>
+            <CircularProgress 
+              variant="determinate" 
+              value={progressPercentage} 
+              size={60} 
+              thickness={6} 
+              sx={{
+                position: 'relative',
+                backgroundColor: '#E0F7FA',
+                borderRadius: '50%',
+                color: "#4CAF50" // Set the color to a custom value
+              }}
+            />
+            <h4 className="w-28 text-right	text-xs font-bold mb-2">{pose}</h4>
           </div>
-          <CircularProgress 
-            variant="determinate" 
-            value={progressPercentage} 
-            size={60} 
-            thickness={6} 
-            sx={{
-              position: 'relative',
-              backgroundColor: '#E0F7FA',
-              borderRadius: '50%',
-              color: "#4CAF50" // Set the color to a custom value
-            }}
-          />
           <div className='flex justify-between'>
-            <p className="text-sm text-gray-500">Progress: {progressPercentage}%</p>
-            <p className="text-sm text-gray-500">
+            <p className="text-xs text-gray-500">{progressPercentage}%</p>
+            <p className="text-xs text-gray-500">
               {progressRemaining} / {maxPoints} XP
             </p>
           </div>
