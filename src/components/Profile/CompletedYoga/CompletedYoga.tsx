@@ -27,8 +27,6 @@ const CompletedYoga = () => {
     return accumulator;
   }, {});
   
-  console.log(accumulatedPointsPerPose);
-  
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mt-4">
       {Object.keys(accumulatedPointsPerPose).map((pointsKey, index) => {
